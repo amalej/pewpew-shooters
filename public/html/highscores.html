@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../images/space-travel-32.png" type="image/x-icon">
+    <title>Highscores</title>
+    <link rel="stylesheet" href="../materialize/materialize.min.css">
+    <style>
+        body {
+            margin: 0px;
+            height: 100vh;
+            width: 100vw;
+            background-color: black;
+        }
+        
+        button {
+            border: none;
+            padding: 10em, 20em, 10em, 20em!important;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0px!important;
+            padding: 0.2em 2em 0.2em 2em;
+            border-radius: 5em;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.26);
+            width: 80%;
+            position: relative;
+            outline: 0px;
+        }
+        
+        button:active {
+            box-shadow: none!important;
+        }
+        
+        button img {
+            height: 100%!important;
+            padding: 0.5em;
+            position: absolute;
+            left: 0px;
+        }
+        
+        .btn-container {
+            margin: 1em 0em 1em 0em!important;
+        }
+        
+        .noselect {
+            /* iOS Safari */
+            -webkit-user-select: none;
+            /* Safari */
+            -khtml-user-select: none;
+            /* Konqueror HTML */
+            -moz-user-select: none;
+            /* Firefox */
+            -ms-user-select: none;
+            /* Internet Explorer/Edge */
+            user-select: none;
+            /* Non-prefixed version, currently supported by Chrome and Opera */
+        }
+        
+        .main-div {
+            z-index: 1;
+        }
+        
+        @import "../susy/sass/susy";
+        @import "../compass-mixins/lib/compass/reset";
+        .stars,
+        .twinkling,
+        .clouds {
+            position: absolute;
+            display: block;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        .stars {
+            z-index: 0;
+            background: #000 url('../images/start-bg.png') repeat top center;
+        }
+        
+        .twinkling {
+            z-index: 0;
+            background: transparent url('../images/twinkling-bg.png') repeat top center;
+            animation: move-twink-back 200s linear infinite;
+        }
+        
+        @keyframes move-twink-back {
+            from {
+                background-position: 0 0;
+            }
+            to {
+                background-position: -10000px 5000px;
+            }
+        }
+        
+        @keyframes move-clouds-back {
+            from {
+                background-position: 0 0;
+            }
+            to {
+                background-position: 10000px 0;
+            }
+        }
+        
+        .highscore-container {
+            padding: 1em!important;
+            max-height: 60vh;
+            overflow-y: scroll;
+        }
+        
+        .hidden-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background Animation div -->
+    <div class="stars"></div>
+    <div class="twinkling"></div>
+
+    <!-- Main div -->
+    <div class="row valign-wrapper main-div" style="height: 100%; margin: 0px;">
+        <div class="card col s10 offset-s1 m6 offset-m3 l4 offset-l4 blue-grey darken-3" style="padding:0px!important">
+
+            <!-- Card Title -->
+            <div class="card-content blue-grey darken-4 white-text noselect">
+                <span class="card-title center-align" style="margin-bottom: 0em!important; font-family: Verdana, Geneva, Tahoma, sans-serif;">Highscores</span>
+            </div>
+
+            <!-- Card Content - High Score -->
+            <div id="highScoreContainer" class="card-content center-align highscore-container white-text hidden-scrollbar noselect">
+                <div class="preloader-wrapper big active">
+                    <div class="spinner-layer spinner-blue-only">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="gap-patch">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card Action - Back to menu Button -->
+            <div class="card-action center-align" style="height: 5em!important;display: flex;justify-content: center;align-items: center; padding:0.5em;">
+                <button id="buttonMenu" class="blue-grey darken-4">
+                    <img src="../images/menu-64.png" style="height: 100%!important; padding: 0.5em; position:absolute; left: 0px;" />
+                    <div class="white-text" style="padding-left: 0.75em;">Back to Menu</div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Javascript -->
+    <script src="../firebase/firebase-app.js"></script>
+    <script src="../firebase/firebase-analytics.js"></script>
+    <script src="../firebase/firebase-performance.js"></script>
+    <script src="../firebase/firebase-firestore.js"></script>
+    <script src="../materialize/materialize.min.js"></script>
+    <script src="../js/highscores.js"></script>
+</body>
+
+</html>

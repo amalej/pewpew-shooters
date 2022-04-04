@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="icon" href="../images/space-travel-32.png" type="image/x-icon">
+    <title>PewPew Shooters</title>
+    <link rel="stylesheet" href="../materialize/materialize.min.css">
+    <style>
+        body {
+            margin: 0px;
+            height: 100vh;
+            width: 100vw;
+            background-color: black;
+        }
+        
+        canvas {
+            z-index: 1;
+            height: 100%;
+            width: 100%;
+        }
+        
+        button {
+            text-transform: none!important;
+        }
+        
+        .noselect {
+            /* iOS Safari */
+            -webkit-user-select: none;
+            /* Safari */
+            -khtml-user-select: none;
+            /* Konqueror HTML */
+            -moz-user-select: none;
+            /* Firefox */
+            -ms-user-select: none;
+            /* Internet Explorer/Edge */
+            user-select: none;
+            /* Non-prefixed version, currently supported by Chrome and Opera */
+        }
+        
+        .canvas-container {
+            padding: 0px!important;
+        }
+        
+        .main-div {
+            z-index: 1;
+        }
+        
+        @import "../susy/sass/susy";
+        @import "../compass-mixins/lib/compass/reset";
+        .stars,
+        .twinkling,
+        .clouds {
+            position: absolute;
+            display: block;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        .stars {
+            z-index: 0;
+            background: #000 url('../images/start-bg.png') repeat top center;
+        }
+        
+        .twinkling {
+            z-index: 0;
+            background: transparent url('../images/twinkling-bg.png') repeat top center;
+            animation: move-twink-back 200s linear infinite;
+        }
+        
+        @keyframes move-twink-back {
+            from {
+                background-position: 0 0;
+            }
+            to {
+                background-position: -10000px 5000px;
+            }
+        }
+        
+        @keyframes move-clouds-back {
+            from {
+                background-position: 0 0;
+            }
+            to {
+                background-position: 10000px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background Animation div -->
+    <div class="stars"></div>
+    <div class="twinkling"></div>
+
+    <!-- Main div -->
+    <div class="row valign-wrapper main-div" style="height: 100%;">
+        <div class="col s12 offset-s0 m8 offset-m2 l6 offset-l3" style="z-index: 1;">
+            <div class="noselect white-text" style="display: flex; position: relative;">
+
+                <!-- Display for user infomation and score -->
+                <span class="noselect" style="position: absolute; top: 0;">
+                    <span style="margin-right: 0.3em;">Username:</span><span id='usernameValue'>0</span>
+                </span>
+                <span class="noselect" style="position: absolute; bottom: 0;">
+                    <span style="margin-right: 0.3em;">Score:</span><span id='scoreValue'>0</span>
+                </span>
+
+                <!-- Pause Button -->
+                <span class="right-align" style="width: 100%; margin: 0.5em 1em 1.25em 1em;">
+                    <button id="buttonPause" 
+                        class="btn waves-effect waves-light btn-large" 
+                        style="border-radius: 20em!important;">
+                        Pause
+                    </button>
+                </span>
+            </div>
+
+            <!-- Game Canvas -->
+            <canvas id="gameCanvas" style="border: 0.01em solid white;"></canvas>
+
+            <!-- Joystick Canvas -->
+            <div class="" id="canvasContainer" style="height: 100%;">
+                <canvas id="joystickCanvas" name="game"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Game Over -->
+    <div id="modalGameOver" class="modal">
+        <div class="modal-content center-align noselect">
+            <h3>Game Over</h3>
+            <div class="noselect" style="font-size: 24px;">
+                <span>Score:</span> <span id='gameOverScoreValue'>0</span>
+                <div id="newHighScore"></div>
+            </div>
+
+            <!-- Play again Button -->
+            <div class="center-align" style="width: 100%; padding-top: 5%;">
+                <button id="buttonPlayAgain" class="waves-effect waves-light btn-large" style="width: 80%; border-radius: 20em!important;">Play Again</button>
+            </div>
+
+            <!-- Quit game Button -->
+            <div class="center-align" style="width: 100%; padding-top: 5%;">
+                <button id="buttonQuit" class="waves-effect waves-light btn-large" style="width: 80%; border-radius: 20em!important;">Quit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Pause -->
+    <div id="modalPause" class="modal">
+        <div class="modal-content center-align noselect">
+            <h3>Paused</h3>
+
+            <!-- Resume game Button -->
+            <div class="center-align" style="width: 100%; padding-top: 5%;">
+                <button id="buttonResume" class="waves-effect waves-light btn-large" style="width: 80%; border-radius: 20em!important;">Resume</button>
+            </div>
+
+            <!-- Quit game Button -->
+            <div class="center-align" style="width: 100%; padding-top: 5%;">
+                <button id="buttonPauseQuit" class="waves-effect waves-light btn-large" style="width: 80%; border-radius: 20em!important;">Quit</button>
+            </div>
+
+            <!-- Volume div -->
+            <div style="padding-top: 5%;">
+
+                <!-- Music Volume div -->
+                <div class="center-align" style="width: 80%; margin-left: 10%;">
+                    <p>
+                        Music
+                    </p>
+                    <p class="range-field">
+                        <input type="range" id="musicVolume" min="0" max="100" />
+                    </p>
+                </div>
+
+                <!-- Sound Volume div -->
+                <div class="center-align" style="width: 80%; margin-left: 10%;">
+                    <p>
+                        Sound
+                    </p>
+                    <p class="range-field">
+                        <input type="range" id="soundVolume" min="0" max="100" />
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Javascript -->
+    <script src="../firebase/firebase-app.js"></script>
+    <script src="../firebase/firebase-analytics.js"></script>
+    <script src="../firebase/firebase-performance.js"></script>
+    <script src="../firebase/firebase-firestore.js"></script>
+    <script src="../materialize/materialize.min.js"></script>
+    <script src="../gsap/gsap.min.js"></script>
+    <script src="../howler/howler.js"></script>
+    <script src="../js/game.js"></script>
+    <script src="../js/joystick.js"></script>
+</body>
+
+</html>

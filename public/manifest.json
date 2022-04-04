@@ -1,0 +1,39 @@
+{
+    "name": "PewpewShooters",
+    "short_name": "PewpewShooters",
+    "start_url": ".",
+    "description": "PewpewShooters Game",
+    "icons": [{
+            "src": "images/space-travel-128-maskable.png",
+            "sizes": "128x128",
+            "type": "image/png",
+            "purpose": "maskable"
+        }, {
+            "src": "images/space-travel-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "images/space-travel-192-maskable.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "images/space-travel-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "images/space-travel-512-maskable.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ],
+    "theme_color": "#263238",
+    "background_color": "#263238",
+    "display": "fullscreen"
+}

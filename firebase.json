@@ -1,0 +1,28 @@
+{
+    "hosting": {
+        "public": "public",
+        "cleanUrls": true,
+        "ignore": [
+            "firebase.json",
+            "**/.*",
+            "**/node_modules/**"
+        ],
+
+        "rewrites": [{
+            "source": "/html/index",
+            "destination": "/index.html"
+        }, {
+            "source": "/html/game",
+            "destination": "/game.html"
+        }, {
+            "source": "/html/highscores",
+            "destination": "/highscores.html"
+        }, {
+            "source": "/html/menu",
+            "destination": "/menu.html"
+        }, {
+            "source": "/html/signIn",
+            "destination": "/signIn.html"
+        }]
+    }
+}
